@@ -1,5 +1,34 @@
-# kaggle-chars74k
-Classification of characters from Google Street View images
+# Kaggle Chars74k
+
+Code for producing a submission for the Kaggle challenge [First steps with Julia](https://www.kaggle.com/c/street-view-getting-started-with-julia). The Chars74k dataset contains images from Google Streetview of 64 characters. The below network achieves an accuracy of 0.76014 on the public test set.
+
+Model architecture
+------------------
+
+| Layer |   Type            				|
+|:-----:|:-------------------------:		|
+| Input | 48x48             				|
+| 1     | conv 3x3, 128, leaky relu (0.01) 	|
+| 2     | conv 3x3, 128, leaky relu (0.01)  |
+|       | max 2x2/2, dropout 0.25			| 
+| 3     | conv 3x3, 128, relu    			|
+| 4     | conv 3x3, 128, relu    			|
+|       | max 2x2/2, LR normalization		|
+| 5     | conv 3x3, 128, leaky relu (0.01)  |
+| 6     | conv 3x3, 128, leaky relu (0.01)  |
+|       | max 2x2/2, LR normalization		|
+| 7     | conv 3x3, 128, leaky relu (0.01)  |
+| 8     | fc 2048, leaky relu (0.01)  		|
+|       | droput 0.5 						|
+| 10    | fc 2048, leaky relu (0.01)  		|
+|       | dropout 0.5 						|
+| 11    | fc 62, softmax    				|
+
+
+Running training
+----------------
+
+cd ~/kaggle/chars74k
 
 ### create augmented data from original images
 python gen_train.py ./data/train/ ./data/trainAugmented/ ./data/trainLabels.csv
