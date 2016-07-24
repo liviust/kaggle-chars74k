@@ -1,3 +1,7 @@
+"""
+Converts mean image from proto binary format to numpy array.
+"""
+
 import caffe
 import numpy as np
 import sys
@@ -7,9 +11,9 @@ if len(sys.argv) != 3:
     sys.exit()
 
 blob = caffe.proto.caffe_pb2.BlobProto()
-data = open( sys.argv[1] , 'rb' ).read()
+data = open(sys.argv[1], 'rb').read()
 blob.ParseFromString(data)
-arr = np.array( caffe.io.blobproto_to_array(blob) )
+arr = np.array(caffe.io.blobproto_to_array(blob))
 out = arr[0]
 print np.shape(out)
-np.save( sys.argv[2] , out )
+np.save(sys.argv[2] , out)

@@ -1,3 +1,7 @@
+"""
+Generates text files that contain the filenames for training and test sets.
+"""
+
 import csv
 import os
 import sys
@@ -25,7 +29,7 @@ if task == "train":
         path = fi + head[i]
         lst = os.listdir(fi + head[i])
         for img in lst:
-	    img_lst.append((head[i] + '/' + img, i))
+            img_lst.append((head[i] + '/' + img, i))
             # img_lst.append((cnt, i, path + '/' + img))
             # cnt += 1
 else:
@@ -37,25 +41,24 @@ else:
 
 # shuffle
 if task == "train":
-	random.shuffle(img_lst)
+    random.shuffle(img_lst)
 
 # in training, 10% of the data are used for validation
 if task == "train":
-	val_index = int(0.9 * len(img_lst))
-	val_lst = img_lst[val_index:]
-	img_lst = img_lst[:val_index]
+    val_index = int(0.9 * len(img_lst))
+    val_lst = img_lst[val_index:]
+    img_lst = img_lst[:val_index]
 
-	fo = csv.writer(open("train.lst", "w"), delimiter='\t', lineterminator='\n')
-	for item in img_lst:
-		fo.writerow(item)
+    fo = csv.writer(open("train.lst", "w"), delimiter='\t', lineterminator='\n')
+    for item in img_lst:
+        fo.writerow(item)
 
-	fo = csv.writer(open("valid.lst", "w"), delimiter='\t', lineterminator='\n')
-	for item in val_lst:
-		fo.writerow(item)
-		
+    fo = csv.writer(open("valid.lst", "w"), delimiter='\t', lineterminator='\n')
+    for item in val_lst:
+        fo.writerow(item)
+
 else:
-	fo = csv.writer(open("test.lst", "w"), delimiter='\t', lineterminator='\n')
-	for item in img_lst:
-		fo.writerow(item)
-    
-    
+    fo = csv.writer(open("test.lst", "w"), delimiter='\t', lineterminator='\n')
+    for item in img_lst:
+        fo.writerow(item)
+

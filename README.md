@@ -2,6 +2,8 @@
 
 Code for producing a submission for the Kaggle challenge [First steps with Julia](https://www.kaggle.com/c/street-view-getting-started-with-julia). The Chars74k dataset contains images from Google Streetview of 64 characters. The below network achieves an accuracy of 0.76014 on the public test set.
 
+![alt text](https://kaggle2.blob.core.windows.net/competitions/kaggle/3947/media/chars74k.jpg "Source: https://www.kaggle.com/c/street-view-getting-started-with-julia")
+
 Model architecture
 ------------------
 
@@ -28,29 +30,35 @@ Model architecture
 Running training
 ----------------
 
-cd ~/kaggle/chars74k
-
-### create augmented data from original images
+Create augmented data from original images
+```
 python gen_train.py ./data/train/ ./data/trainAugmented/ ./data/trainLabels.csv
-
 python gen_test.py ./data/test/ ./data/testAugmented/
-
-### create database files
+```
+  
+Create database files
+``` 
 rm -r ~/kaggle/chars74k/train_leveldb/
 rm -r ~/kaggle/chars74k/valid_leveldb/
 
 cd ~/caffe/build/tools
 
 ./convert_imageset -gray -backend leveldb ~/kaggle/chars74k/data/trainAugmented/ ~/kaggle/chars74k/train.lst ~/kaggle/chars74k/train_leveldb
-
 ./convert_imageset -gray -backend leveldb ~/kaggle/chars74k/data/trainAugmented/ ~/kaggle/chars74k/valid.lst ~/kaggle/chars74k/valid_leveldb
+```
 
-### compute mean image from training set
-./compute_image_mean ~/kaggle/chars74k/train_leveldb ~/kaggle/chars74k/mean.binaryproto -backend leveldb
+Compute mean image from training set
+```
+./compute_image_mean ~/kaggle/chars74k/train_leveldb ~/kaggle/chars74k/mean.binaryproto -backend leveldb`
+```
 
-### run ConvNet training
+Run CNN training
+```
 ./caffe train --solver=/home/matthias/kaggle/chars74k/networks/vgg_solver.prototxt
+```
 
-### make submission
+Make submission
+```
 cd ~/kaggle/chars74k
 python make_submission.py ~/kaggle/chars74k/data/sampleSubmission.csv test.lst out.csv
+```

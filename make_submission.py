@@ -1,3 +1,7 @@
+"""
+Run pretrained Caffe model to predict character classes and store results in a submission file.
+"""
+
 import csv
 import os
 import numpy as np

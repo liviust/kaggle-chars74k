@@ -1,8 +1,10 @@
+"""
+Generate test images by converting to gray scale and resizing to 56x56 pixels.
+"""
+
 import os
 import sys
 import csv
-import pandas as pd
-from sklearn import preprocessing
 
 if len(sys.argv) < 2:
     print "Usage: python gen_test.py input_folder output_folder"
